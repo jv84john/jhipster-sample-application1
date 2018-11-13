@@ -1,0 +1,88 @@
+entity School{
+	schoolName String required nativeLanguage,
+    schoolID String required nativeLanguage,
+    schoolType String required,
+    contactNumber Long,
+    createdAt Instant,
+    createdBy String,
+    modifiedAt Instant,
+    modifiedBy String  
+}
+
+entity Emirates{
+	emirates_Ar String nativeLanguage required,
+    emirates_En String required
+}
+
+entity Student{
+	grade String ,
+    gender String ,
+	dateofBirth Instant,
+    contactNumber Long,
+    finalAvgGrade Integer,
+    favProfession1 String nativeLanguage,
+    favProfession2 String nativeLanguage,
+    favProfession3 String nativeLanguage,
+    favProfession4 String nativeLanguage,
+    favProfession5 String nativeLanguage,
+    coordinatorComment String nativeLanguage,
+    profileStatus String,
+    createdAt Instant,
+    createdBy String,
+    modifiedAt Instant,
+    modifiedBy String    
+}
+
+entity Country {
+	countryName_En String required,
+    countryName_Ar String nativeLanguage required
+}
+
+entity QuestionBank{
+	questionOrder Integer required,
+    question_Ar String nativeLanguage,
+    question_En String,
+}
+
+entity Category{
+	categoryType_Ar String nativeLanguage,
+    categoryType_En String,
+    colorType String,
+}
+
+entity Exam{
+	answer String,
+    createdAt Instant,
+    createdBy String,
+    modifiedAt Instant,
+    modifiedBy String   
+}
+
+
+relationship OneToOne {
+    School{emirate} to Emirates
+}
+
+relationship OneToOne {
+	Student{school} to School
+    Student{country} to Country
+}
+
+relationship ManyToOne {
+    Exam{student} to Student,
+    Exam(question) to QuestionBank
+}
+
+
+
+// Set pagination options
+paginate * with pager
+
+// Use Data Transfert Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
